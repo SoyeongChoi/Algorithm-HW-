@@ -24,7 +24,10 @@ public class MatrixChainMultiplication {
 		
 		int m[][] = new int[x][x];
 		int s[][] = new int[x][x];
-		
+		for(int i = 0; i < s.length; i++){
+			Arrays.fill(s[i], -1);
+			Arrays.fill(m[i], -1);
+		}
 		MatrixChainOrder(p,m,s);
 	}
 
@@ -46,7 +49,7 @@ public class MatrixChainMultiplication {
 				}
 			}
 		}
-		for(int i=0;i<n;i++)
+		for(int i=1;i<n;i++)
     	{
     		for(int j=0;j<n;j++)
     			System.out.print(m[i][j]+"\t");
