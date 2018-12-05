@@ -16,29 +16,29 @@ public class MatrixChainMultiplication {
 		}
 		int p[] = new int[x];
 		for(int i = 0; i < x; i++){
-			System.out.println(i+"번째 행렬값을 입력하세요 ");
+			System.out.print("A("+(i+1)+") = ");
 			int temp = input.nextInt();
 			p[i] = temp;
 		}
+		System.out.println();
 		
 		int m[][] = new int[x][x];
 		int s[][] = new int[x][x];
 		
 		MatrixChainOrder(p,m,s);
-		
 	}
 
 	public static void MatrixChainOrder(int p[],int m[][],int s[][]){
-		int n = p.length -1;
-		for(int i = 0; i < n; i++){
+		int n = p.length;
+		for(int i = 1; i < n; i++){
 			m[i][i] = 0;
 		}
-		for(int l = 2; l <= n; l++){
-			for(int i = 1; i <= n-l+1; i++){
+		for(int l = 2; l < n; l++){
+			for(int i = 1; i < n-l+1; i++){
 				int j = i + l -1;
 				m[i][j] = MAX;
-				for(int k = i; i < k-1; k++){
-					int q = m[i][k] + m[k+1][k] + p[i-1]*p[k]*p[j];
+				for(int k = i; k <= j-1; k++){
+					int q = m[i][k] + m[k+1][j] + p[i-1]*p[k]*p[j];
 					if(q<m[i][j]){
 						m[i][j] = q;
 						s[i][j] = k;
@@ -46,11 +46,14 @@ public class MatrixChainMultiplication {
 				}
 			}
 		}
-		for(int i = m.length-1; i>0; i--){
-			for(int j = 1; j < m.length; j++){
-				printOptimalParens(m, i, j);
-			}
-		}
+		for(int i=0;i<n;i++)
+    	{
+    		for(int j=0;j<n;j++)
+    			System.out.print(m[i][j]+"\t");
+           System.out.println();
+    	}
+		 printOptimalParens(s,1,s.length-1);
+
 	}
 	
 	public static void printOptimalParens(int[][]s, int i, int j){
@@ -58,6 +61,7 @@ public class MatrixChainMultiplication {
 			System.out.print("A"+i);
 		}else{
 			System.out.print("(");
+			printOptimalParens(s,i,s[i][j]);
 			printOptimalParens(s,s[i][j]+1,j);
 			System.out.print(")");
 		}
